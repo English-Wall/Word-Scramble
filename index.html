@@ -1,21 +1,37 @@
+
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Scramble Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Scramble Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- 引入 PT Sans 字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="game-container">
-        <h1>Word Scramble Game</h1>
-        <p>把字母拖曳或點擊到答案區，組成正確的單字。</p>
-        <div class="scramble-area" id="scramble-area">
-            </div>
-        <div class="answer-area" id="answer-area">
-            </div>
-        <div id="message-area" class="message-area"></div>
+  <div class="game-container">
+    <h1>Word Scramble Game</h1>
+
+    <!-- 提示區域 -->
+    <div class="hint">
+      <p>Drag or click the letters to the answer area to form the correct word.</p>
+      <p>Hint: A machine or device for moving or processing things.</p>
     </div>
-    <script src="script.js"></script>
+
+    <!-- 顯示被打亂的字母區 -->
+    <div class="puzzle"></div>
+    
+    <!-- 顯示答案區 -->
+    <div class="answer"></div>
+    
+    <!-- 檢查答案按鈕 -->
+    <button id="checkBtn">Check Answer</button>
+    
+    <!-- 顯示結果 -->
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
