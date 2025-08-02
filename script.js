@@ -1,5 +1,5 @@
 // Puzzle word (can be replaced with any word you want)
-const word = 'engine';
+const word = 'advisory';
 
 // 儲存目前使用者選擇的答案
 let currentAnswer = [];
