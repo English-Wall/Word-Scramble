@@ -106,6 +106,7 @@ function checkAnswer() {
   } else {
     resultDiv.textContent = 'Try Again!';
     resultDiv.style.color = 'red';
+    setTimeout(resetGame, 1500); // 1.5 秒後重新開始
   }
 }
 
@@ -114,19 +115,6 @@ function resetGame() {
   createPuzzle(); // 重新打亂字母
 }
 
-function checkAnswer() {
-  const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent);
-  const resultDiv = document.getElementById('result');
-  
-  if (answerLetters.join('') === word) {
-    resultDiv.textContent = 'Correct!';
-    resultDiv.style.color = 'green';
-  } else {
-    resultDiv.textContent = 'Try Again!';
-    resultDiv.style.color = 'red';
-    setTimeout(resetGame, 1500); // 1.5 秒後重新開始
-  }
-}
 
 // 遊戲重置
 createPuzzle();
