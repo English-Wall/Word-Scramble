@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const puzzleDiv = document.querySelector('.puzzle');
   const answerDiv = document.querySelector('.answer');
   const checkBtn = document.getElementById('checkBtn');
-  const hintBtn = document.getElementById('hintBtn'); // <<< 新增：獲取 Hint 按鈕
   const resultDiv = document.getElementById('result');
   const hintP = document.querySelector('.hint p'); // 獲取提示的 <p> 元素
 
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // --- Game State ---
-  let currentQuestionIndex = 0; 
+  let currentQuestionIndex = 0; // 2. 追蹤目前在哪一題
   let draggedLetter = null;
 
   // --- Functions ---
@@ -91,73 +90,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent).join('');
     
     if (answerLetters === currentWord) {
-       currentQuestionIndex++; 
+      resultDiv.textContent = 'Correct!';
+      resultDiv.style.color = 'green';
       
-      if (currentQuestionIndex < questions.length) {
-        // --- 答對，但還不是最後一題 ---
-        resultDiv.textContent = 'Correct!';
-        resultDiv.style.color = 'green';
-        setTimeout(loadQuestion, 1500);
-      } else {
-        // --- 答對了最後一題！ ---
-        // 直接顯示結束畫面，不再設定 resultDiv
-        showGameCompletion(); 
-      }
+      currentQuestionIndex++; // 移至下一題
+      
+      setTimeout(() => {
+        if (currentQuestionIndex < questions.length) {
+          loadQuestion(); // 如果還有題目，載入下一題
+        } else {
+          showGameCompletion(); // 如果全部答完，顯示結束畫面
+        }
+      }, 1500); // 延遲 1.5 秒讓玩家看到 "Correct!"
 
     } else {
-      // --- 答錯 ---
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
-      setTimeout(loadQuestion, 1200);
+      
+      // 答錯時，延遲一下再重置當前題目
+      setTimeout(() => {
+        // 只重置當前題目，而不是整個遊戲
+        loadQuestion(); 
+      }, 1200);
     }
   }
-
-// <<< 新增：鎖定字母的函式 >>>
-  /**
-   * Locks a letter, making it non-interactive.
-   * @param {HTMLElement} letter - The letter element to lock.
-   */
-  function lockLetter(letter) {
-    letter.classList.add('locked');
-    letter.setAttribute('draggable', 'false');
-    // 移除所有可能的互動事件
-    letter.removeEventListener('click', handlePuzzleLetterClick);
-    letter.removeEventListener('click', handleAnswerLetterClick);
-    letter.removeEventListener('dragstart', handleDragStart);
-  }
-
-  // <<< 新增：提供提示的函式 >>>
-  /**
-   * Provides a hint by revealing the first letter of the answer.
-   */
-  function giveHint() {
-    // 檢查答案區是否已經有字母，如果有了就不提供提示，避免搞亂玩家已有的答案
-    if (answerDiv.children.length > 0) {
-        hintBtn.disabled = true; // 直接禁用按鈕
-        return;
-    }
-    
-    const correctWord = questions[currentQuestionIndex].word;
-    const firstLetterChar = correctWord[0];
-
-    // 從題目區找到第一個匹配提示字母的方塊
-    const letterToMove = Array.from(puzzleDiv.children).find(
-      (letter) => letter.textContent === firstLetterChar
-    );
-
-    if (letterToMove) {
-      // 將字母移動到答案區並鎖定它
-      answerDiv.appendChild(letterToMove);
-      lockLetter(letterToMove);
-
-      // 禁用提示按鈕，每回合只能用一次
-      hintBtn.disabled = true;
-    }
-  }
-
   
   /**
-   * 載入特定關卡的題目和提示
+   * 3. 載入特定關卡的題目和提示
    */
   function loadQuestion() {
     // 清空上個關卡的狀態
@@ -165,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     answerDiv.innerHTML = '';
     resultDiv.textContent = '';
     resultDiv.classList.remove('red', 'green');
-    hintBtn.disabled = false; // 每回合開始時，重新啟用 Hint 按鈕
     
     // 獲取當前題目資料
     const currentQuestion = questions[currentQuestionIndex];
@@ -190,19 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
    * 當所有題目都回答完畢時呼叫
    */
   function showGameCompletion() {
-    // 1. 隱藏所有不需要的遊戲元素
-    hintP.style.display = 'none';
-    puzzleDiv.style.display = 'none';
-    answerDiv.style.display = 'none';
-    document.querySelector('.button-container').style.display = 'none';
-
-    // 2. 在 resultDiv 中顯示最終的恭喜訊息
-    resultDiv.innerHTML = `
-      <p style="color: green; font-size: 24px; font-weight: bold;">Congratulations!</p>
-      <p style="font-size: 18px;">You have completed all the word puzzles!</p>
-      <button onclick="location.reload()" style="margin-top: 20px;">Play Again</button>
+    gameContainer.innerHTML = `
+      <h1>Congratulations!</h1>
+      <p style="font-size: 20px; color: #333;">You have completed all the word puzzles!</p>
+      <button onclick="location.reload()">Play Again</button>
     `;
-    resultDiv.style.color = 'initial'; // 重設顏色，以免繼承到紅色
   }
 
   // --- Event Listener Setup ---
@@ -225,8 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   checkBtn.addEventListener('click', checkAnswer);
-  hintBtn.addEventListener('click', giveHint); // <<< 新增：為 Hint 按鈕加上點擊事件監聽
-  
+
   // --- Start the Game ---
   loadQuestion(); // 初始載入第一題
 });
