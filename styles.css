@@ -16,7 +16,7 @@ body {
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 450px;
+  width: 700px;
   max-width: 90%;
 }
 
@@ -38,7 +38,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  gap: 15px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -50,7 +50,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
@@ -76,22 +76,22 @@ h1 {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  height: 90px;
+  height: 75px;
   border: 2px solid #ddd;
   padding: 20px;
   background-color: #f9f9f9;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .answer .letter {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
   border-radius: 10px;
   opacity: 0.7;
