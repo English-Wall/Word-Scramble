@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * 4. 檢查答案與處理遊戲進程
    */
-  function checkAnswer() {
+   function checkAnswer() {
     const currentWord = questions[currentQuestionIndex].word;
     const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent).join('');
     
@@ -93,25 +93,20 @@ document.addEventListener('DOMContentLoaded', () => {
       resultDiv.textContent = 'Correct!';
       resultDiv.style.color = 'green';
       
-      currentQuestionIndex++; // 移至下一題
+      currentQuestionIndex++; 
       
       setTimeout(() => {
         if (currentQuestionIndex < questions.length) {
-          loadQuestion(); // 如果還有題目，載入下一題
+          loadQuestion();
         } else {
-          showGameCompletion(); // 如果全部答完，顯示結束畫面
+          showGameCompletion(); 
         }
-      }, 1500); // 延遲 1.5 秒讓玩家看到 "Correct!"
+      }, 1500);
 
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
-      
-      // 答錯時，延遲一下再重置當前題目
-      setTimeout(() => {
-        // 只重置當前題目，而不是整個遊戲
-        loadQuestion(); 
-      }, 1200);
+      setTimeout(loadQuestion, 1200);
     }
   }
   
@@ -147,10 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * 當所有題目都回答完畢時呼叫
    */
-  function showGameCompletion() {
-    gameContainer.innerHTML = `
-      <h1>Congratulations!</h1>
-      <p style="font-size: 20px; color: #333;">You have completed all the word puzzles!</p>
+ function showGameCompletion() {
+    // 1. 清空或隱藏不再需要的元素
+    hintP.style.display = 'none';
+    answerDiv.innerHTML = '';
+    answerDiv.style.display = 'none'; // 隱藏答案區的框線
+    document.querySelector('.button-container').style.display = 'none';
+    resultDiv.style.display = 'none'; // 隱藏 "Correct!" 訊息，避免重疊
+
+    // 2. 在 puzzle 區域顯示最終的恭喜訊息
+    puzzleDiv.innerHTML = `
+      <h2 style="color: green; margin: 0;">Congratulations!</h2>
+      <p style="margin: 10px 0;">You have completed all the word puzzles!</p>
       <button onclick="location.reload()">Play Again</button>
     `;
   }
