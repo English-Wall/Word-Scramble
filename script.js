@@ -91,28 +91,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent).join('');
     
     if (answerLetters === currentWord) {
-      resultDiv.textContent = 'Correct!';
-      resultDiv.style.color = 'green';
+       currentQuestionIndex++; 
       
-      currentQuestionIndex++; // 移至下一題
-      
-      setTimeout(() => {
-        if (currentQuestionIndex < questions.length) {
-          loadQuestion(); // 如果還有題目，載入下一題
-        } else {
-          showGameCompletion(); // 如果全部答完，顯示結束畫面
-        }
-      }, 1500); // 延遲 1.5 秒讓玩家看到 "Correct!"
+      if (currentQuestionIndex < questions.length) {
+        // --- 答對，但還不是最後一題 ---
+        resultDiv.textContent = 'Correct!';
+        resultDiv.style.color = 'green';
+        setTimeout(loadQuestion, 1500);
+      } else {
+        // --- 答對了最後一題！ ---
+        // 直接顯示結束畫面，不再設定 resultDiv
+        showGameCompletion(); 
+      }
 
     } else {
+      // --- 答錯 ---
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
-      
-      // 答錯時，延遲一下再重置當前題目
-      setTimeout(() => {
-        // 只重置當前題目，而不是整個遊戲
-        loadQuestion(); 
-      }, 1200);
+      setTimeout(loadQuestion, 1200);
     }
   }
 
