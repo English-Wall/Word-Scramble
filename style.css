@@ -1,63 +1,125 @@
+/* 設置全局字體 */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #e0f7fa; /* 淺藍色背景 */
+  font-family: 'PT Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
 }
 
+/* 遊戲容器 */
 .game-container {
-    text-align: center;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  max-width: 90%;
 }
 
 h1 {
-    color: #00796b;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.scramble-area, .answer-area {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+/* 提示區域 */
+.hint {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #666;
 }
 
-.scramble-letter, .answer-box {
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    border: 2px solid #00acc1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    font-weight: bold;
-    color: #00796b;
-    cursor: pointer;
-    background-color: #e0f2f1;
-    border-radius: 5px;
-    transition: transform 0.2s;
+/* 打亂字母區 */
+.puzzle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.scramble-letter:hover {
-    transform: scale(1.1);
+/* 每個字母 */
+.puzzle .letter {
+  width: 60px;
+  height: 60px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.answer-box {
-    background-color: #f1f8e9;
-    border-color: #689f38;
+/* 隨機背景顏色 */
+.puzzle .letter:nth-child(odd) {
+  background-color: #f7b7b7; /* 淺紅色 */
 }
 
-.correct {
-    color: #388e3c;
-    font-weight: bold;
+.puzzle .letter:nth-child(even) {
+  background-color: #b7d7f7; /* 淺藍色 */
 }
 
-.wrong {
-    color: #d32f2f;
-    font-weight: bold;
+/* 當滑鼠懸停時的變化 */
+.puzzle .letter:hover {
+  background-color: #ff9e9e; /* 橙色 */
+}
+
+/* 答案區域 */
+.answer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: 60px;
+  border: 2px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  gap: 10px;
+}
+
+.answer .letter {
+  width: 60px;
+  height: 60px;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+/* 檢查答案按鈕 */
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* 結果顯示 */
+#result {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: green;
+}
+
+#result.red {
+  color: red;
 }
