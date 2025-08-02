@@ -110,14 +110,11 @@ function checkAnswer() {
   }
 }
 
+// 遊戲重置
 function resetGame() {
-  document.getElementById('result').textContent = '';
   createPuzzle(); // 重新打亂字母
 }
-
-
-// 遊戲重置
-createPuzzle();
-
+  
 // Add event listener for the check button
+createPuzzle();
 document.getElementById('checkBtn').addEventListener('click', checkAnswer);
