@@ -1,78 +1,92 @@
-// Puzzle word (can be replaced with any word you want)
-const word = 'engine';
+// 1. 定義變數來存儲字母和答案的狀態
+let originalLetters = ['W', 'O', 'R', 'D', 'S', 'C', 'R', 'A', 'M', 'B', 'L', 'E'];  // 例：原始字母
+let currentLetters = [...originalLetters];  // 當前的字母順序
+let correctAnswer = 'SCRAMBLE';  // 假設答案是 'SCRAMBLE'
+let letterSlots = []; // 用來存儲玩家放置字母的位置
 
-// 隨機生成顏色
-function getRandomColor() {
-  const colors = ['#f7b7b7', '#b7d7f7', '#f7d7b7', '#d7f7b7', '#f7f7b7'];
-  return colors[Math.floor(Math.random() * colors.length)];
+// 2. 記錄玩家點擊的字母，將其放到相應的位置
+function handleLetterClick(letter, slotIndex) {
+    // 確保這個字母沒放過
+    if (letterSlots[slotIndex]) {
+        alert("你已經放置過這個字母!");
+        return;
+    }
+
+    // 放置字母
+    letterSlots[slotIndex] = letter;
+    // 顯示字母在正確的答案格內
+    document.getElementById(`slot-${slotIndex}`).innerText = letter;
+    // 更新字母的顯示位置
+    currentLetters = currentLetters.filter(l => l !== letter);
 }
 
-// Shuffle the word to create a puzzle
-function shuffleWord(word) {
-  const letters = word.split('');
-  for (let i = letters.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [letters[i], letters[j]] = [letters[j], letters[i]];
-  }
-  return letters;
+// 3. 當玩家放錯字母時，將字母返回原位
+function resetWrongLetter(letter, slotIndex) {
+    // 重置該格並移除已放置的字母
+    document.getElementById(`slot-${slotIndex}`).innerText = '';
+    currentLetters.push(letter);  // 將字母放回原來的字母區
 }
 
-// Create the puzzle
-function createPuzzle() {
-  const shuffledLetters = shuffleWord(word);
-  const puzzleDiv = document.querySelector('.puzzle');
-  puzzleDiv.innerHTML = ''; // Clear existing letters
-
-  shuffledLetters.forEach(letter => {
-    const letterDiv = document.createElement('div');
-    letterDiv.classList.add('letter');
-    letterDiv.textContent = letter;
-    letterDiv.setAttribute('draggable', 'true');
-    letterDiv.style.backgroundColor = getRandomColor(); // 設置隨機顏色
-    letterDiv.addEventListener('dragstart', dragStart);
-    puzzleDiv.appendChild(letterDiv);
-  });
-}
-
-// Handle drag start event
-let draggedLetter = null;
-function dragStart(event) {
-  draggedLetter = event.target;
-  event.dataTransfer.setData('text/plain', draggedLetter.textContent);
-}
-
-// Allow dropping letters into the answer area
-const answerDiv = document.querySelector('.answer');
-answerDiv.addEventListener('dragover', function(event) {
-  event.preventDefault();
-});
-
-answerDiv.addEventListener('drop', function(event) {
-  event.preventDefault();
-  if (draggedLetter) {
-    answerDiv.appendChild(draggedLetter); // 把字母放到答案區域
-    draggedLetter.style.opacity = 1;
-    draggedLetter.removeAttribute('draggable'); // 移除拖放屬性
-    draggedLetter = null;
-  }
-});
-
-// Check the answer
+// 4. 檢查答案並重置遊戲
 function checkAnswer() {
-  const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent);
-  const resultDiv = document.getElementById('result');
-  
-  if (answerLetters.join('') === word) {
-    resultDiv.textContent = 'Correct!';
-    resultDiv.style.color = 'green';
-  } else {
-    resultDiv.textContent = 'Try Again!';
-    resultDiv.style.color = 'red';
-  }
+    const playerAnswer = letterSlots.join('');
+    
+    if (playerAnswer === correctAnswer) {
+        alert('恭喜你答對了！');
+        // 可選: 繼續進行下一輪或結束遊戲
+    } else {
+        alert('答案錯誤！重置遊戲');
+        resetGame();
+    }
 }
 
-// Initialize the game
-createPuzzle();
+// 5. 重置遊戲
+function resetGame() {
+    // 清空字母格和答案區
+    letterSlots = [];
+    currentLetters = [...originalLetters];  // 重置字母順序
+    
+    // 重置HTML顯示
+    document.querySelectorAll('.letter-slot').forEach(slot => {
+        slot.innerText = ''; // 清除答案格中的字母
+    });
+    document.querySelectorAll('.letter-box').forEach(box => {
+        box.innerText = ''; // 清除字母區域中的字母
+    });
+    
+    // 重新排列字母到題目格中
+    shuffleLetters();
+}
 
-// Add event listener for the check button
-document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+// 6. 打亂字母順序（用於初始化題目格）
+function shuffleLetters() {
+    currentLetters = shuffle([...originalLetters]);
+    // 更新界面顯示打亂後的字母
+    document.querySelectorAll('.letter-box').forEach((box, index) => {
+        box.innerText = currentLetters[index];
+    });
+}
+
+// 隨機打亂函數
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex, temporaryValue;
+    
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        
+        // Swap it with the current element
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+// 初始化遊戲
+window.onload = function() {
+    shuffleLetters();  // 打亂字母，顯示在題目格中
+};
