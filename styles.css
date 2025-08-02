@@ -24,6 +24,7 @@ h1 {
   font-size: 32px;
   margin-bottom: 20px;
   color: #333;
+  white-space: nowrap; 
 }
 
 /* 提示區域 */
@@ -37,9 +38,11 @@ h1 {
 .puzzle {
   display: flex;
   justify-content: center;
+  align-items: center; /* <<< 新增：讓字母垂直置中 */
   margin-bottom: 20px;
   gap: 10px; /* <<< 修改點：縮小間距 */
   flex-wrap: nowrap; /* <<< 新增：強制不換行 */
+  min-height: 70px; /* <<< 新增：設定最小高度，防止坍塌 */
 }
 
 /* 每個字母 */
