@@ -17,7 +17,6 @@ function shuffleWord(word) {
   return letters;
 }
 
-
 // DOM references
 const puzzleDiv = document.querySelector('.puzzle');
 const answerDiv = document.querySelector('.answer');
@@ -27,6 +26,10 @@ let draggedLetter = null;
 
 // Create the puzzle
 function createPuzzle() {
+  puzzleDiv.innerHTML = '';
+  answerDiv.innerHTML = '';
+  resultDiv.textContent = '';
+  
   const shuffledLetters = shuffleWord(word);
   const puzzleDiv = document.querySelector('.puzzle');
   puzzleDiv.innerHTML = ''; // Clear existing letters
@@ -37,18 +40,23 @@ function createPuzzle() {
     letterDiv.textContent = letter;
     letterDiv.setAttribute('draggable', 'true');
     letterDiv.style.backgroundColor = getRandomColor(); // 設置隨機顏色
+    
+// 拖曳事件
     letterDiv.addEventListener('dragstart', dragStart);
-    puzzleDiv.appendChild(letterDiv);
-  });
-}
 
+
+// 點擊事件（放入答案）
 letterDiv.addEventListener('click', () => {
-  if (letterDiv.parentElement.classList.contains('puzzle')) {
+  if (letterDiv.parentElement === puzzleDiv) {
     answerDiv.appendChild(letterDiv);
     letterDiv.removeAttribute('draggable');
     letterDiv.style.opacity = 1;
   }
 });
+
+    puzzleDiv.appendChild(letterDiv);
+  });
+}
 
 // 拖曳功能
 let draggedLetter = null;
@@ -63,12 +71,12 @@ answerDiv.addEventListener('dragover', function(event) {
   event.preventDefault();
 });
 
-answerDiv.addEventListener('drop', function(event) {
+answerDiv.addEventListener('drop', function(event) => {
   event.preventDefault();
-  if (draggedLetter) {
-    answerDiv.appendChild(draggedLetter); // 把字母放到答案區域
+  if (draggedLetter && draggedLetter.parentElement === puzzleDiv) {
+    answerDiv.appendChild(draggedLetter);
     draggedLetter.style.opacity = 1;
-    draggedLetter.removeAttribute('draggable'); // 移除拖放屬性
+    draggedLetter.removeAttribute('draggable');
     draggedLetter = null;
   }
 });
