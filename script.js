@@ -1,5 +1,5 @@
 // Puzzle word (can be replaced with any word you want)
-const word = 'advisory';
+const word = 'engine';
 
 // 隨機生成顏色
 function getRandomColor() {
