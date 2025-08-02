@@ -71,28 +71,6 @@ h1 {
   background-color: #ff9e9e; /* 橙色 */
 }
 
-/* 讓答案區的格子看起來和題目區一樣 */
-.answer-area .answer-box {
-  width: 50px;
-  height: 50px;
-  border: 2px solid #ccc;
-  margin: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2em;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #f1f8e9; /* 淺綠色作為答案區背景 */
-  border-radius: 5px;
-}
-
-/* 讓隱藏的字母消失 */
-.hidden {
-  visibility: hidden;
-  /* 或者使用 display: none; */
-}
-
 /* 答案區域 */
 .answer {
   display: flex;
