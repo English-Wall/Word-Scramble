@@ -17,13 +17,6 @@ function shuffleWord(word) {
   return letters;
 }
 
-// DOM references
-const puzzleDiv = document.querySelector('.puzzle');
-const answerDiv = document.querySelector('.answer');
-const resultDiv = document.getElementById('result');
-
-let draggedLetter = null;
-
 // Create the puzzle
 function createPuzzle() {
   puzzleDiv.innerHTML = '';
