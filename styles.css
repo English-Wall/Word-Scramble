@@ -38,7 +38,7 @@ h1 {
 .puzzle {
   display: flex;
   justify-content: center;
-  align-items: center; /* <<< 讓字母垂直置中 */
+
   margin-bottom: 20px;
   gap: 8px;
   flex-wrap: nowrap;
