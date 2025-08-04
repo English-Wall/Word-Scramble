@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     { word: 'inspection', hint: 'The procedure which compares an object with its standard or specification' },
     { word: 'hazardous', hint: 'Dangerous' },
     { word: 'subsequent', hint: 'That comes “after”' },
-    { word: 'accidental', hint: ' That does not occur on purpose' }
+    { word: 'accidental', hint: ' That does not occur on purpose' },
     { word: 'equivalent', hint: 'Has the same properties, functions, or values' },
     { word: 'advisory', hint: 'Advice, warning, or non-mandatory recommendation from a manufacturer or authority.' },
     { word: 'recurrence', hint: 'Something happening again or repeatedly, especially after a period of time.' },
-    { word: 'preliminary', hint: 'Initial' },
+    { word: 'preliminary', hint: 'Initial' }
   ];
 
   // --- Game State ---
