@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const answerDiv = document.querySelector('.answer');
   const checkBtn = document.getElementById('checkBtn');
   const resultDiv = document.getElementById('result');
-  const hintP = document.querySelector('.hint p'); // 獲取提示的 <p> 元素
 
   // ======================================================================
   // 1. 建立題庫 (您可以自由新增、修改或刪除)
