@@ -18,6 +18,7 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 800px; /* <<< 修改點：加寬容器 */
   max-width: 90%;
+  padding-bottom: 100px;
 }
 
 h1 {
@@ -80,7 +81,7 @@ h1 {
   justify-content: center;
   align-items: center; /* 讓字母垂直置中 */
   margin-bottom: 20px;
-  height: 70px; /* <<< 修改點：調整高度以匹配新字母尺寸 */
+  height: 65px; /* <<< 修改點：調整高度以匹配新字母尺寸 */
   border: 2px solid #ddd;
   padding: 10px;
   background-color: #f9f9f9;
@@ -112,6 +113,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 button:hover {
@@ -120,12 +122,78 @@ button:hover {
 
 /* 結果顯示 */
 #result {
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 20px;
   font-weight: bold;
-  color: green;
+  text-align: center;
+  width: 100%;
+  
 }
-
 #result.red {
   color: red;
 }
+
+#result.green {
+  color: green;
+}
+
+
+/* 按鈕容器，讓兩個按鈕並排 */ 
+.button-container { 
+  display: flex; 
+  justify-content: center; 
+  gap: 15px; /* 按鈕間的距離 */ 
+  margin-top: 20px; 
+} 
+
+ 
+
+/* 提示按鈕的樣式 */ 
+#hintBtn { 
+  background-color: #f0ad4e; /* 橘色，與綠色區分 */ 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  font-size: 18px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  margin-top: 0; /* 因為已經由容器管理 margin-top */ 
+} 
+
+#hintBtn:hover { 
+  background-color: #ec971f; 
+} 
+
+ 
+
+/* 按鈕被禁用時的樣式 */ 
+#hintBtn:disabled { 
+  background-color: #cccccc; 
+  cursor: not-allowed; 
+} 
+
+ 
+
+/* 被鎖定的字母樣式 */ 
+.letter.locked { 
+  background-color: #d8d8d8 !important; /* 強制使用灰色背景 */ 
+  color: #555; 
+  cursor: not-allowed; /* 滑鼠指標變為「禁止」 */ 
+  opacity: 0.8; 
+} 
+
+ 
+/* --- 修改原有的 button 樣式 --- */ 
+
+/* 移除原本按鈕的上邊距，因為已由新容器管理 */ 
+button { 
+  background-color: #4CAF50; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  font-size: 18px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  margin-top: 0; /* 從 20px 改為 0 */ 
+
+} 
