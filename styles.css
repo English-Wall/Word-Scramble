@@ -16,13 +16,13 @@ body {
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 800px; /* <<< 修改點：加寬容器 */
+  width: 700px; /* <<< 修改點：加寬容器 */
   max-width: 90%;
   padding-bottom: 100px;
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 40px;
   margin-bottom: 20px;
   color: #333;
   white-space: nowrap; 
@@ -30,7 +30,7 @@ h1 {
 
 /* 提示區域 */
 .hint {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 20px;
   color: #666;
 }
@@ -48,8 +48,8 @@ h1 {
 
 /* 每個字母 */
 .puzzle .letter {
-  width: 45px; /* <<< 修改點：縮小寬度 */
-  height: 45px; /* <<< 修改點：縮小高度 */
+  width: 40px; /* <<< 修改點：縮小寬度 */
+  height: 40px; /* <<< 修改點：縮小高度 */
   background-color: #f0f0f0;
   display: flex;
   justify-content: center;
@@ -91,8 +91,8 @@ h1 {
 
 /* 這是用來處理原本設計中答案區色塊的樣式，實際上因為JS直接移動元素，這個樣式不會被應用到已放入的字母上 */
 .answer .letter {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   background-color: #ddd;
   display: flex;
   justify-content: center;
