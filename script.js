@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLetterListeners(letter) {
     letter.removeEventListener('click', handlePuzzleLetterClick);
     letter.removeEventListener('click', handleAnswerLetterClick);
-    letter.addEventListener('click', letter.parentElement === puzzleDiv ? handlePuzzleLetterClick : handleAnswerLetterClick);
+    letter.addEventListener('click', handlePuzzleLetterClick);
     letter.setAttribute('draggable', 'true');
   }
 
