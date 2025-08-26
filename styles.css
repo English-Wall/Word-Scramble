@@ -68,15 +68,11 @@ h1 {
 }
 
 .puzzle .letter:nth-child(odd) {
-  background-color: #f7b7b7;
+  background-color: #f7b7b7;/* 淺紅色 */
 }
 
 .puzzle .letter:nth-child(even) {
-  background-color: #b7d7f7;
-}
-
-.puzzle .letter:hover {
-  background-color: #ff9e9e;
+  background-color: #b7d7f7;/* 淺藍色 */
 }
 
 .letter.locked {
