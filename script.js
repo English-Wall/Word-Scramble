@@ -38,27 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  function moveLetterToAnswer(letter) {
-    if (!letter) return;
-    answerDiv.appendChild(letter);
-    updateLetterListeners(letter, 'answer');
-  }
-
-  function moveLetter(letter, targetDiv) {
-    if (!letter) return;
+ function moveLetter(letter, targetDiv) {
+    if (!letter || letter.classList.contains('locked')) return;
     targetDiv.appendChild(letter);
-    updateLetterListeners(letter);
   }
 
-  function updateLetterListeners(letter) {
-    letter.removeEventListener('click', handlePuzzleLetterClick);
-    letter.removeEventListener('click', handleAnswerLetterClick);
-    letter.addEventListener('click', handlePuzzleLetterClick);
-    letter.setAttribute('draggable', 'true');
+  function handlePuzzleLetterClick(e) {
+    moveLetter(e.target, answerDiv);
   }
 
-  function handlePuzzleLetterClick(e) { moveLetter(e.target, answerDiv); }
-  function handleAnswerLetterClick(e) { moveLetter(e.target, puzzleDiv); }
+  function handleAnswerLetterClick(e) {
+    moveLetter(e.target, puzzleDiv);
+  }
+
 
   function handleDragStart(e) {
     draggedLetter = e.target;
