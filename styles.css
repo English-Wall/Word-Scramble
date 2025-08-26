@@ -192,18 +192,27 @@ button {
   font-size: 18px; 
   border-radius: 4px; 
   cursor: pointer; 
-  margin-top: 0; /* 從 20px 改為 0 */ 
+  margin-top: 0; 
 
 } 
 
+
+/* 手機版樣式調整 */
 @media (max-width: 480px) {
   h1 {
-    font-size: 28px; /* 手機版縮小標題字體 */
-    white-space: normal; /* 允許換行 */
+    font-size: 28px;       /* 縮小標題字體 */
+    white-space: normal;   /* 允許換行，避免跑版 */
   }
 
   .game-container {
-    padding: 20px;
     width: 100%;
+    padding: 20px;
+  }
+
+  .puzzle .letter,
+  .answer .letter {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
   }
 }
