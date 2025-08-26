@@ -1,12 +1,10 @@
 /* 設置全局字體 */
 body {
   font-family: 'PT Sans', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
   background-color: #ffffff;
+  padding-top: 30px; 
+  display: block;
 }
 
 /* 遊戲容器 */
