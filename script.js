@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- DOM Elements ---
   const gameContainer = document.querySelector('.game-container');
   const puzzleDiv = document.querySelector('.puzzle');
   const answerDiv = document.querySelector('.answer');
   const checkBtn = document.getElementById('checkBtn');
-  const hintBtn = document.getElementById('hintBtn'); // <<< 新增：獲取 Hint 按鈕 
+  const hintBtn = document.getElementById('hintBtn');
   const resultDiv = document.getElementById('result');
   const hintP = document.querySelector('.hint p');
 
@@ -30,16 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let draggedLetter = null;
 
   // --- Functions ---
-
-  function shuffleWord(wordToShuffle) {
-    const letters = wordToShuffle.split('');
-    for (let i = letters.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [letters[i], letters[j]] = [letters[j], letters[i]];
-    }
-    return letters;
+ function shuffleWord(word) {
+    return word.split('').sort(() => Math.random() - 0.5);
   }
-  
+
   function getRandomColor() {
     const colors = ['#f7b7b7', '#b7d7f7', '#d7f7b7'];
     return colors[Math.floor(Math.random() * colors.length)];
@@ -51,157 +44,85 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLetterListeners(letter, 'answer');
   }
 
-  function moveLetterToPuzzle(letter) {
+  function moveLetter(letter, targetDiv) {
     if (!letter) return;
-    puzzleDiv.appendChild(letter);
-    updateLetterListeners(letter, 'puzzle');
+    targetDiv.appendChild(letter);
+    updateLetterListeners(letter);
   }
 
-  function updateLetterListeners(letter, location) {
+  function updateLetterListeners(letter) {
     letter.removeEventListener('click', handlePuzzleLetterClick);
     letter.removeEventListener('click', handleAnswerLetterClick);
-    if (location === 'puzzle') {
-      letter.addEventListener('click', handlePuzzleLetterClick);
-      letter.setAttribute('draggable', 'true');
-    } else {
-      letter.addEventListener('click', handleAnswerLetterClick);
-      letter.setAttribute('draggable', 'true');
+    letter.addEventListener('click', letter.parentElement === puzzleDiv ? handlePuzzleLetterClick : handleAnswerLetterClick);
+    letter.setAttribute('draggable', 'true');
+  }
+
+  function handlePuzzleLetterClick(e) { moveLetter(e.target, answerDiv); }
+  function handleAnswerLetterClick(e) { moveLetter(e.target, puzzleDiv); }
+
+  function handleDragStart(e) {
+    draggedLetter = e.target;
+    e.dataTransfer.setData('text/plain', draggedLetter.textContent);
+  }
+  
+   //鎖定字母的函式
+  function lockLetter(letter) {
+    letter.classList.add('locked');
+    letter.setAttribute('draggable', 'false');
+    letter.removeEventListener('click', handlePuzzleLetterClick);
+    letter.removeEventListener('click', handleAnswerLetterClick);
+    letter.removeEventListener('dragstart', handleDragStart);
+  }
+
+  //提供提示
+  function giveHint() {
+  // 檢查答案區是否已經有字母，如果有了就不提供提示，避免搞亂玩家已有的答案
+    if (answerDiv.children.length > 0) {
+      hintBtn.disabled = true;
+      return;
+    }
+    const correctWord = questions[currentQuestionIndex].word;
+    const firstLetter = Array.from(puzzleDiv.children).find(l => l.textContent === correctWord[0]);
+    if (firstLetter) {
+      moveLetter(firstLetter, answerDiv);
+      lockLetter(firstLetter);
+      hintBtn.disabled = true;
     }
   }
-  
-  // --- Event Handlers ---
 
-  function handlePuzzleLetterClick(event) {
-    moveLetterToAnswer(event.target);
-  }
-
-  function handleAnswerLetterClick(event) {
-    moveLetterToPuzzle(event.target);
-  }
-
-  function handleDragStart(event) {
-    draggedLetter = event.target;
-    event.dataTransfer.setData('text/plain', draggedLetter.textContent);
-  }
-
-  
-   // <<< 新增：鎖定字母的函式 >>> 
-
-  /** 
-   * Locks a letter, making it non-interactive. 
-   * @param {HTMLElement} letter - The letter element to lock. 
-   */ 
-  function lockLetter(letter) { 
-    letter.classList.add('locked'); 
-    letter.setAttribute('draggable', 'false'); 
-    // 移除所有可能的互動事件 
-    letter.removeEventListener('click', handlePuzzleLetterClick); 
-    letter.removeEventListener('click', handleAnswerLetterClick); 
-    letter.removeEventListener('dragstart', handleDragStart); 
-  } 
-
-
-  // <<< 新增：提供提示的函式 >>> 
-  /** 
-   * Provides a hint by revealing the first letter of the answer. 
-   */ 
-  function giveHint() { 
-    // 檢查答案區是否已經有字母，如果有了就不提供提示，避免搞亂玩家已有的答案 
-    if (answerDiv.children.length > 0) { 
-        hintBtn.disabled = true; // 直接禁用按鈕 
-        return; 
-    } 
- 
-
-    const correctWord = questions[currentQuestionIndex].word; 
-    const firstLetterChar = correctWord[0]; 
-
-
-    // 從題目區找到第一個匹配提示字母的方塊 
-    const letterToMove = Array.from(puzzleDiv.children).find( 
-      (letter) => letter.textContent === firstLetterChar 
-    ); 
-
-
-    if (letterToMove) { 
-      // 將字母移動到答案區並鎖定它 
-      answerDiv.appendChild(letterToMove); 
-      lockLetter(letterToMove); 
-
-
-      // 禁用提示按鈕，每回合只能用一次 
-      hintBtn.disabled = true; 
-    } 
-  } 
-  
-  
-  /**
-   * 4. 檢查答案與處理遊戲進程
-   */
   function checkAnswer() {
     const currentWord = questions[currentQuestionIndex].word;
-    const answerLetters = Array.from(answerDiv.children).map(letter => letter.textContent).join('');
-    
-    if (answerLetters === currentWord) {
+    const answer = Array.from(answerDiv.children).map(l => l.textContent).join('');
+    if (answer === currentWord) {
       resultDiv.textContent = 'Correct!';
       resultDiv.style.color = 'green';
-      
-      currentQuestionIndex++; // 移至下一題
-      
-      setTimeout(() => {
-        if (currentQuestionIndex < questions.length) {
-          loadQuestion(); // 如果還有題目，載入下一題
-        } else {
-          showGameCompletion(); // 如果全部答完，顯示結束畫面
-        }
-      }, 1500); // 延遲 1.5 秒讓玩家看到 "Correct!"
-
+      currentQuestionIndex++;
+      setTimeout(() => currentQuestionIndex < questions.length ? loadQuestion() : showGameCompletion(), 1500);
     } else {
       resultDiv.textContent = 'Try Again!';
       resultDiv.style.color = 'red';
-      
-      // 答錯時，延遲一下再重置當前題目
-      setTimeout(() => {
-        // 只重置當前題目，而不是整個遊戲
-        loadQuestion(); 
-      }, 1200);
+      setTimeout(loadQuestion, 1200);
     }
   }
-  
-  /**
-   * 3. 載入特定關卡的題目和提示
-   */
+
   function loadQuestion() {
-    // 清空上個關卡的狀態
     puzzleDiv.innerHTML = '';
     answerDiv.innerHTML = '';
     resultDiv.textContent = '';
-    resultDiv.classList.remove('red', 'green');
-
-    hintBtn.disabled = false; // <<< 修改點：每回合開始時，重新啟用 Hint 按鈕 
-    
-    // 獲取當前題目資料
-    const currentQuestion = questions[currentQuestionIndex];
-    const shuffledLetters = shuffleWord(currentQuestion.word);
-    
-    // 更新提示文字
-    hintP.textContent = `Hint: ${currentQuestion.hint}`;
-    
-    // 建立新的字母方塊
-    shuffledLetters.forEach(letterText => {
-      const letterDiv = document.createElement('div');
-      letterDiv.classList.add('letter');
-      letterDiv.textContent = letterText;
-      letterDiv.style.backgroundColor = getRandomColor();
-      letterDiv.addEventListener('dragstart', handleDragStart);
-      updateLetterListeners(letterDiv, 'puzzle');
-      puzzleDiv.appendChild(letterDiv);
+    hintBtn.disabled = false;
+    const current = questions[currentQuestionIndex];
+    hintP.textContent = `Hint: ${current.hint}`;
+    shuffleWord(current.word).forEach(char => {
+      const letter = document.createElement('div');
+      letter.className = 'letter';
+      letter.textContent = char;
+      letter.style.backgroundColor = getRandomColor();
+      letter.addEventListener('dragstart', handleDragStart);
+      updateLetterListeners(letter);
+      puzzleDiv.appendChild(letter);
     });
   }
-  
-  /**
-   * 當所有題目都回答完畢時呼叫
-   */
+
   function showGameCompletion() {
     gameContainer.innerHTML = `
       <h1>Congratulations!</h1>
@@ -210,28 +131,27 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // --- Event Listener Setup ---
-  answerDiv.addEventListener('dragover', (event) => event.preventDefault());
-  answerDiv.addEventListener('drop', (event) => {
-    event.preventDefault();
+  answerDiv.addEventListener('dragover', e => e.preventDefault());
+  answerDiv.addEventListener('drop', e => {
+    e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== answerDiv) {
-      moveLetterToAnswer(draggedLetter);
+      moveLetter(draggedLetter, answerDiv);
       draggedLetter = null;
     }
   });
 
-  puzzleDiv.addEventListener('dragover', (event) => event.preventDefault());
-  puzzleDiv.addEventListener('drop', (event) => {
-    event.preventDefault();
+  puzzleDiv.addEventListener('dragover', e => e.preventDefault());
+  puzzleDiv.addEventListener('drop', e => {
+    e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== puzzleDiv) {
-      moveLetterToPuzzle(draggedLetter);
+      moveLetter(draggedLetter, puzzleDiv);
       draggedLetter = null;
     }
   });
 
   checkBtn.addEventListener('click', checkAnswer);
-  hintBtn.addEventListener('click', giveHint); // <<< 新增：為 Hint 按鈕加上點擊事件監聽 
-  
-  // --- Start the Game ---
-  loadQuestion(); // 初始載入第一題
+  hintBtn.addEventListener('click', giveHint);
+
+  loadQuestion();
 });
+
