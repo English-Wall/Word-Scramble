@@ -1,5 +1,5 @@
 
-// Word Scramble Game - Updated Version with Return Feature
+// Word Scramble Game - Final Fix Version
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameContainer = document.querySelector('.game-container');
@@ -38,18 +38,25 @@ document.addEventListener('DOMContentLoaded', () => {
   function moveLetter(letter, targetDiv) {
     if (!letter || letter.classList.contains('locked')) return;
     targetDiv.appendChild(letter);
+    updateClickHandler(letter);
+  }
+
+  function updateClickHandler(letter) {
+    letter.removeEventListener('click', handlePuzzleLetterClick);
+    letter.removeEventListener('click', handleAnswerLetterClick);
+    if (letter.parentElement === puzzleDiv) {
+      letter.addEventListener('click', handlePuzzleLetterClick);
+    } else {
+      letter.addEventListener('click', handleAnswerLetterClick);
+    }
   }
 
   function handlePuzzleLetterClick(e) {
     moveLetter(e.target, answerDiv);
-    e.target.removeEventListener('click', handlePuzzleLetterClick);
-    e.target.addEventListener('click', handleAnswerLetterClick);
   }
 
   function handleAnswerLetterClick(e) {
     moveLetter(e.target, puzzleDiv);
-    e.target.removeEventListener('click', handleAnswerLetterClick);
-    e.target.addEventListener('click', handlePuzzleLetterClick);
   }
 
   function handleDragStart(e) {
@@ -125,8 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== answerDiv) {
       moveLetter(draggedLetter, answerDiv);
-      draggedLetter.removeEventListener('click', handlePuzzleLetterClick);
-      draggedLetter.addEventListener('click', handleAnswerLetterClick);
       draggedLetter = null;
     }
   });
@@ -136,8 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== puzzleDiv) {
       moveLetter(draggedLetter, puzzleDiv);
-      draggedLetter.removeEventListener('click', handleAnswerLetterClick);
-      draggedLetter.addEventListener('click', handlePuzzleLetterClick);
       draggedLetter = null;
     }
   });
