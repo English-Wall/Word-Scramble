@@ -1,3 +1,6 @@
+
+// Word Scramble Game - Fixed Version
+
 document.addEventListener('DOMContentLoaded', () => {
   const gameContainer = document.querySelector('.game-container');
   const puzzleDiv = document.querySelector('.puzzle');
@@ -7,10 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultDiv = document.getElementById('result');
   const hintP = document.querySelector('.hint p');
 
-
-  // ======================================================================
-  // 1. 建立題庫 (您可以自由新增、修改或刪除)
-  // ======================================================================
   const questions = [
     { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
     { word: 'revise', hint: 'To change, improve, or update something, especially a document, plan, or idea.' },
@@ -24,12 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     { word: 'preliminary', hint: 'Initial' }
   ];
 
-  // --- Game State ---
   let currentQuestionIndex = 0;
   let draggedLetter = null;
 
-  // --- Functions ---
- function shuffleWord(word) {
+  function shuffleWord(word) {
     return word.split('').sort(() => Math.random() - 0.5);
   }
 
@@ -38,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
- function moveLetter(letter, targetDiv) {
+  function moveLetter(letter, targetDiv) {
     if (!letter || letter.classList.contains('locked')) return;
     targetDiv.appendChild(letter);
   }
@@ -51,13 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     moveLetter(e.target, puzzleDiv);
   }
 
-
   function handleDragStart(e) {
     draggedLetter = e.target;
     e.dataTransfer.setData('text/plain', draggedLetter.textContent);
   }
-  
-   //鎖定字母的函式
+
   function lockLetter(letter) {
     letter.classList.add('locked');
     letter.setAttribute('draggable', 'false');
@@ -66,9 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     letter.removeEventListener('dragstart', handleDragStart);
   }
 
-  //提供提示
   function giveHint() {
-  // 檢查答案區是否已經有字母，如果有了就不提供提示，避免搞亂玩家已有的答案
     if (answerDiv.children.length > 0) {
       hintBtn.disabled = true;
       return;
@@ -110,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       letter.textContent = char;
       letter.style.backgroundColor = getRandomColor();
       letter.addEventListener('dragstart', handleDragStart);
-      updateLetterListeners(letter);
+      letter.addEventListener('click', handlePuzzleLetterClick);
       puzzleDiv.appendChild(letter);
     });
   }
@@ -146,4 +139,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadQuestion();
 });
-
