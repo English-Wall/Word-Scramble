@@ -197,3 +197,15 @@ button {
   margin-top: 0; /* 從 20px 改為 0 */ 
 
 } 
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px; /* 手機版縮小標題字體 */
+    white-space: normal; /* 允許換行 */
+  }
+
+  .game-container {
+    padding: 20px;
+    width: 100%;
+  }
+}
