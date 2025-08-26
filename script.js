@@ -1,5 +1,5 @@
 
-// Word Scramble Game - Fixed Version
+// Word Scramble Game - Updated Version with Return Feature
 
 document.addEventListener('DOMContentLoaded', () => {
   const gameContainer = document.querySelector('.game-container');
@@ -42,10 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handlePuzzleLetterClick(e) {
     moveLetter(e.target, answerDiv);
+    e.target.removeEventListener('click', handlePuzzleLetterClick);
+    e.target.addEventListener('click', handleAnswerLetterClick);
   }
 
   function handleAnswerLetterClick(e) {
     moveLetter(e.target, puzzleDiv);
+    e.target.removeEventListener('click', handleAnswerLetterClick);
+    e.target.addEventListener('click', handlePuzzleLetterClick);
   }
 
   function handleDragStart(e) {
@@ -121,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== answerDiv) {
       moveLetter(draggedLetter, answerDiv);
+      draggedLetter.removeEventListener('click', handlePuzzleLetterClick);
+      draggedLetter.addEventListener('click', handleAnswerLetterClick);
       draggedLetter = null;
     }
   });
@@ -130,6 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     if (draggedLetter && draggedLetter.parentElement !== puzzleDiv) {
       moveLetter(draggedLetter, puzzleDiv);
+      draggedLetter.removeEventListener('click', handleAnswerLetterClick);
+      draggedLetter.addEventListener('click', handlePuzzleLetterClick);
       draggedLetter = null;
     }
   });
