@@ -1,16 +1,5 @@
 
-// Word Scramble Game - Final Fix Version
-
-document.addEventListener('DOMContentLoaded', () => {
-  const gameContainer = document.querySelector('.game-container');
-  const puzzleDiv = document.querySelector('.puzzle');
-  const answerDiv = document.querySelector('.answer');
-  const checkBtn = document.getElementById('checkBtn');
-  const hintBtn = document.getElementById('hintBtn');
-  const resultDiv = document.getElementById('result');
-  const hintP = document.querySelector('.hint p');
-
-  const questions = [
+const questions = [
     { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
     { word: 'revise', hint: 'To change, improve, or update something, especially a document, plan, or idea.' },
     { word: 'inspection', hint: 'The procedure which compares an object with its standard or specification' },
@@ -23,7 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
     { word: 'preliminary', hint: 'Initial' }
   ];
   
-  questions.sort(() => Math.random() - 0.5);  //加入這行使題目變隨機不重複，若要照順序刪掉即可
+questions.sort(() => Math.random() - 0.5);  //加入這行使題目變隨機不重複，若要照順序刪掉即可
+
+document.addEventListener('DOMContentLoaded', () => {
+  const gameContainer = document.querySelector('.game-container');
+  const puzzleDiv = document.querySelector('.puzzle');
+  const answerDiv = document.querySelector('.answer');
+  const checkBtn = document.getElementById('checkBtn');
+  const hintBtn = document.getElementById('hintBtn');
+  const resultDiv = document.getElementById('result');
+  const hintP = document.querySelector('.hint p');
+
   
   let currentQuestionIndex = 0;
   let draggedLetter = null;
