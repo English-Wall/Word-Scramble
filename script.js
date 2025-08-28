@@ -2,6 +2,7 @@
 // Word Scramble Game - Final Fix Version
 
 document.addEventListener('DOMContentLoaded', () => {
+  questions.sort(() => Math.random() - 0.5);  //加入這行使題目變隨機不重複，若要照順序刪掉即可
   const gameContainer = document.querySelector('.game-container');
   const puzzleDiv = document.querySelector('.puzzle');
   const answerDiv = document.querySelector('.answer');
