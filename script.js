@@ -1,5 +1,11 @@
 
 const questions = [
+    //{ word: '', hint: '.' },
+    { word: 'cartridge', hint: 'A squib.' },
+    { word: 'explosive', hint: 'Referring to something having the nature of an explosion.' },
+    { word: 'malfunction', hint: 'A failure to work , to function incorrectly.' },
+    { word: 'barrier', hint: 'Something such as a wall that prevents the movement of something else.' },
+    { word: 'reference', hint: 'A source of information.' },
     { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
     { word: 'revise', hint: 'To change, improve, or update something, especially a document, plan, or idea.' },
     { word: 'inspection', hint: 'The procedure which compares an object with its standard or specification' },
