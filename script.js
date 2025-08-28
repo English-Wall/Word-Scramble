@@ -117,7 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
     const current = questions[currentQuestionIndex];
     hintP.textContent = `Hint: ${current.hint}`;
-      
+   
+    //顯示題號
     const questionNumberDiv = document.getElementById('questionNumber');
     questionNumberDiv.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
 
