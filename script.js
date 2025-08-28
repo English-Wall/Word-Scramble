@@ -114,8 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
     answerDiv.innerHTML = '';
     resultDiv.textContent = '';
     hintBtn.disabled = false;
+      
     const current = questions[currentQuestionIndex];
     hintP.textContent = `Hint: ${current.hint}`;
+      
+    const questionNumberDiv = document.getElementById('questionNumber');
+    questionNumberDiv.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+
     shuffleWord(current.word).forEach(char => {
       const letter = document.createElement('div');
       letter.className = 'letter';
