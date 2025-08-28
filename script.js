@@ -1,6 +1,7 @@
 
 const questions = [
     //{ word: '', hint: '.' },
+    { word: 'occupant', hint: 'Someone who  is currently inside or using a space.' },
     { word: 'cartridge', hint: 'A squib.' },
     { word: 'explosive', hint: 'Referring to something having the nature of an explosion.' },
     { word: 'malfunction', hint: 'A failure to work , to function incorrectly.' },
