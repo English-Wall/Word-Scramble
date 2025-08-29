@@ -1,15 +1,6 @@
 
 const questions = [
     //{ word: '', hint: '.' },
-    
-    
-    
-   
-    
-    
-    
-    
-
     { word: 'hazardous', hint: 'Dangerous' },
     { word: 'inspection', hint: 'The procedure which compares an object with its standard or specification' },
     { word: 'equivalent', hint: 'Has the same properties, functions, or values' },
@@ -23,8 +14,8 @@ const questions = [
     { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
     { word: 'accidental', hint: ' That does not occur on purpose' },
     { word: 'barrier', hint: 'Something such as a wall that prevents the movement of something else.' },
-    { word: 'malfunction', hint: 'A failure to work , to function incorrectly.' },
-    { word: 'explosive', hint: 'Referring to something having the nature of an explosion.' },
+    { word: 'malfunction', hint: 'Incorrect operation.' },
+    { word: 'explosive', hint: 'That can cause an explosion.' },
     { word: 'cartridge', hint: 'A small, self-contained explosive device used to initiate a mechanical action like a squib.' }
   ];
   
