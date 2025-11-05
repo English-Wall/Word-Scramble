@@ -1,22 +1,24 @@
 
 const questions = [
     //{ word: '', hint: '.' },
+    { word: 'advisory', hint: 'Advice, warning, or non-mandatory recommendation from a manufacturer or authority.' },
+    { word: 'equivalent', hint: 'Has the same properties, functions, or values' },
     { word: 'hazardous', hint: 'Dangerous' },
     { word: 'inspection', hint: 'The procedure which compares an object with its standard or specification' },
-    { word: 'equivalent', hint: 'Has the same properties, functions, or values' },
-    { word: 'advisory', hint: 'Advice, warning, or non-mandatory recommendation from a manufacturer or authority.' },
-    { word: 'occupant', hint: 'Someone who  is currently inside or using a space.' },
     { word: 'preliminary', hint: 'Initial' },
+    { word: 'occupant', hint: 'Someone who  is currently inside or using a space.' },
     { word: 'revise', hint: 'To change, improve, or update something, especially a document, plan, or idea.' },
     { word: 'recurrence', hint: 'Something happening again or repeatedly, especially after a period of time.' },
     { word: 'subsequent', hint: 'That comes “after”' },
-    { word: 'reference', hint: 'A source of information.' },
-    { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
-    { word: 'accidental', hint: ' That does not occur on purpose' },
     { word: 'barrier', hint: 'Something such as a wall that prevents the movement of something else.' },
-    { word: 'malfunction', hint: 'Incorrect operation.' },
+    { word: 'accidental', hint: ' That does not occur on purpose' },
+    { word: 'abrade', hint: 'To scrape or wear away a surface or a part by mechanical or chemical action.' },
+    { word: 'reference', hint: 'A source of information.' },
+    { word: 'cartridge', hint: 'A small, self-contained explosive device used to initiate a mechanical action like a squib.' },
     { word: 'explosive', hint: 'That can cause an explosion.' },
-    { word: 'cartridge', hint: 'A small, self-contained explosive device used to initiate a mechanical action like a squib.' }
+    { word: 'malfunction', hint: 'Incorrect operation.' },
+    { word: 'preventive', hint: 'Intended to stop something undesirable from happening.' },
+    { word: 'residual', hint: 'Remaining.' }
   ];
   
 questions.sort(() => Math.random() - 0.5);  //加入這行使題目變隨機不重複，若要照順序刪掉即可
